@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% MATLAB Code for Chan, Anahtar, et al., Nature Nanotechnology, March 2020
-% Last revised: May 4, 2020
+% MATLAB Code for Chan, Anahtar, et al., Nature Nanotechnology, 2020
+% Last revised: May 20, 2020
 
 function [t,final,finalc]=vABN_model()
 
@@ -63,42 +63,42 @@ Qmc = Qm / Vl; % Corrected minute volume aka. breathing rate
 %%%% Transport rates %%%%
 k_np_tissue = 0.05; % Diffusion rate of the vABNs into tissue (1/min), manually fit to in vivo data 
 k_np_phago = 6e-4; % Clearance rate of vABNs via macrophages (1/min), from the literature 
-k_reporter_tissue = 30.8; %  Diffusion rate of VOC reporters into tissue (1/min), computationally fit to in vivo data 
-k_reporter_clear = 28.1; % Clearance rate of VOC reporters into blood (1/min), computationally fit to in vivo data  
+k_reporter_tissue = 39.9; %  Diffusion rate of VOC reporters into tissue (1/min), computationally fit to in vivo data 
+k_reporter_clear = 22.1; % Clearance rate of VOC reporters into blood (1/min), computationally fit to in vivo data  
 
 %%%% NE Concentration %%%%
 NE = 0.0035; % Measured concentration of NE in BALF from infected mice (uM)
-% NE = 0; % Assumed concentration of NE in BALF from infected mice (uM)
+%NE = 0; % Assumed concentration of NE in BALF from infected mice (uM)
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Kinetic parameters and partition coefficients for each modeled reporter 
 % To toggle between the different reporters/properties, simply comment out 
 % the code accordingly. By default, the predicted signal is calculated using 
-% PFC1 as the reporter. 
+% HFA1 as the reporter. 
 
-%%%% PFC1 Cleavage kinetics and partition coefficients %%%%
+%%%% HFA1 Cleavage kinetics and partition coefficients %%%%
 k_cat = 186; % Turnover number for NE (1/min)  
 Km = 10.91; % Michaelis constant for NE (uM) 
-H_blood_air = 51.26; % VOC reporter tissue:blood partition coefficient
-H_tissue_air = 34.49; % VOC reporter tissue:air partition coefficient
+H_blood_air = 65.16; % VOC reporter tissue:blood partition coefficient
+H_tissue_air = 57.64; % VOC reporter tissue:air partition coefficient
 
-%%%% PFC3 Cleavage kinetics and partition coefficients %%%%
+%%%% HFA3 Cleavage kinetics and partition coefficients %%%%
 % k_cat = 53.4; % Turnover number for NE (1/min)
 % Km = 4.42; % Michaelis constant for NE (uM) 
-% H_blood_air = 31.50; % VOC reporter tissue:blood partition coefficient
-% H_tissue_air = 36.64; % VOC reporter tissue:air partition coefficient
+% H_blood_air = 20.06; % VOC reporter tissue:blood partition coefficient
+% H_tissue_air = 137.24; % VOC reporter tissue:air partition coefficient
 
-%%%% PFC5 Cleavage kinetics and partition coefficients %%%%
+%%%% HFA5 Cleavage kinetics and partition coefficients %%%%
 % k_cat = 142.2; % Turnover number for NE (1/min)  
 % Km = 56.13; % Michaelis constant for NE (uM) 
-% H_blood_air = 18.73; % VOC reporter tissue:blood partition coefficient
-% H_tissue_air = 30.82; % VOC reporter tissue:air partition coefficient
+% H_blood_air = 25.63; % VOC reporter tissue:blood partition coefficient
+% H_tissue_air = 58.89; % VOC reporter tissue:air partition coefficient
 
-%%%% PFC7 Cleavage kinetics and partition coefficients %%%%
+%%%% HFA7 Cleavage kinetics and partition coefficients %%%%
 % k_cat = 4.2; % Turnover number for NE (1/min) 
 % Km = 22.34; % Michaelis constant for NE (uM) 
-% H_blood_air = 18.73; % From PFC5 
-% H_tissue_air = 30.82; % From PFC5 
+% H_blood_air = 25.63; % From HFA5 
+% H_tissue_air = 58.89; % From HFA5
 
 %%%% Calculation of the tissue:blood partition coefficient %%%%
 % Stays the same regardless of reporter. 
@@ -107,9 +107,9 @@ H_tissue_blood = H_tissue_air/H_blood_air;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%% Cleavage by nonspecific enzymes %%%%
-NS_E = 2.62; % Concentration of nonspecific enzymes in the respiratory tissue (uM), computationally fit to in vivo data 
-NS_k_cat = k_cat/60; % Turnover number for nonspecific enzymes (1/min), computationally fit to in vivo data 
-NS_Km = Km * 35; % Michaelis constant for nonspecific enzymes (uM), computationally fit to in vivo data 
+NS_E = 3.82; % Concentration of nonspecific enzymes in the respiratory tissue (uM), computationally fit to in vivo data 
+NS_k_cat = k_cat/73.6; % Turnover number for nonspecific enzymes (1/min), computationally fit to in vivo data 
+NS_Km = Km * 33.7; % Michaelis constant for nonspecific enzymes (uM), computationally fit to in vivo data 
 
 %%%% State Conditions %%%%
 C_np_lumen = y(1); % Concentration of nanoparticles in the lumen (uM)
@@ -161,22 +161,22 @@ k_reporter_clear = 28.1; % Clearance rate of VOC reporters into blood (1/min), c
 
 %%%% NE Concentration %%%%
 NE = 2.64; % Predicted concentration of human NE in BALF (uM)
-% NE = 0.0035; % uM, mouse concentration
-% NE = 0 ; 
+%NE = 0.0035; % uM, mouse concentration
+%NE = 0 ; 
 
-%%%% PFC1 Cleavage kinetics and partition coefficients %%%%
+%%%% HFA1 Cleavage kinetics and partition coefficients %%%%
 k_cat = 186; % Turnover number for NE (1/min)  
 Km = 10.91; % Michaelis constant for NE (uM) 
-H_blood_air = 51.26; % VOC reporter tissue:blood partition coefficient
-H_tissue_air = 34.49; % VOC reporter tissue:air partition coefficient
+H_blood_air = 65.16; % VOC reporter tissue:blood partition coefficient
+H_tissue_air = 57.64; % VOC reporter tissue:air partition coefficient
 
 %%%% Calculation of the tissue:blood partition coefficient %%%%
 H_tissue_blood = H_tissue_air/H_blood_air; 
 
 %%%% Cleavage by nonspecific enzymes %%%%
-NS_E = 2.62; % Concentration of nonspecific enzymes in the respiratory tissue (uM), computationally fit to in vivo data 
-NS_k_cat = k_cat/60; % Turnover number for nonspecific enzymes (1/min), computationally fit to in vivo data 
-NS_Km = Km * 35; % Michaelis constant for nonspecific enzymes (uM), computationally fit to in vivo data 
+NS_E = 3.82; % Concentration of nonspecific enzymes in the respiratory tissue (uM), computationally fit to in vivo data 
+NS_k_cat = k_cat/73.6; % Turnover number for nonspecific enzymes (1/min), computationally fit to in vivo data 
+NS_Km = Km * 33.7; % Michaelis constant for nonspecific enzymes (uM), computationally fit to in vivo data 
 
 %%%% State Conditions %%%%
 C_np_lumen = y(1); % Concentration of nanoparticles in the lumen (uM)
